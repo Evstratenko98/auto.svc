@@ -3,11 +3,12 @@ import { InjectQueue } from '@nestjs/bullmq';
 import { Queue } from 'bullmq';
 import { DelayAutosendRequestDto } from './dto/delay-autosend.request.dto';
 import { QUEUE_TITLE } from './delay-autosend.constants';
+import {CustomLoggerService} from "@sravni/creditselection-utils/modules/custom-logger";
 
 @Injectable()
 export class DelayAutosendService {
   private DEFAULT_DELAY_MINUTES = 30;
-  private readonly logger = new Logger(DelayAutosendService.name);
+  private readonly logger: CustomLoggerService;
 
   constructor(@InjectQueue('delay-autosend') private readonly delayAutosendQueue: Queue) {}
 
@@ -37,7 +38,8 @@ export class DelayAutosendService {
         jobId,
       };
     } catch (error) {
-      this.logger.error({ error });
+      this.logger.error(error);
+
       return {
         success: false,
         jobId: null,
