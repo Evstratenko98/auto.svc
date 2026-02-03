@@ -1,0 +1,95 @@
+global:
+  vault:
+    addr: "https://vault.yc.dev.infra.sravni-team.ru/"
+    role: "sravni-prod-k8s-workloads"
+    path: "sravni-prod-k8s-workloads"
+  image:
+    repository: registry.yc.prod.infra.sravni.market/bearlake_dev
+    tag: ""
+  imagePullSecrets:
+    - harbor-pull-secret
+
+app:
+  team: bearlake
+  port: 9034
+  probes:
+    livenessPath: "/internal/health"
+    readinessPath: "/internal/health"
+    initialDelaySeconds: 10
+  env:
+    - name: SERVICE_NAME
+      value: "autosend-service"
+    - name: PORT
+      value: "9034"
+    - name: NODE_ENV
+      value: "stage"
+    - name: ENV
+      value: "stage"
+    - name: DEBUG_LOG
+      value: "false"
+    - name: CREDIT_SELECTION_HOST
+      value: "https://creditselection.svc.bearlake.dev.lan"
+    - name: CREDIT_SELECTION_RANKING_HOST
+      value: "https://creditselection-ranking.svc.bearlake.dev.lan"
+    - name: CREDIT_SELECTION_API_HOST
+      value: "https://creditselection-api.svc.bearlake.dev.lan"
+    - name: URL_SHRINKER_HOST
+      value: "https://urlshrinker.svc.platform.dev.lan"
+    - name: FORM_BUILDER_HOST
+      value: "https://fb.formbuilder.dev.lan"
+    - name: ISSUER_HOST
+      value: "https://id.master.sravni.tech"
+    - name: ORGANIZATIONS_HOST
+      value: "https://organizations.svc.emergency.dev.lan"
+    - name: LOCATIONS_HOST
+      value: "https://locations.svc.platform.dev.lan"
+    - name: DADATA_HOST
+      value: "https://dadata.svc.platform.dev.lan"
+    - name: CREDIT_SELECTION_LOAN_RATE_HOST
+      value: "https://creditselection-loan-rate-service.svc.bearlake.dev.lan"
+    - name: LOANS_FORM_BUILDER_HOST
+      value: "https://loans.svc.formbuilder.dev.lan"
+    - name: SCORING_HOST
+      value: "https://scoring.svc.dobro.dev.lan"
+    - name: CREDITS_HOST
+      value: "https://credits.svc.vitrina.dev.lan"
+    - name: CARDS_HOST
+      value: "https://cards.svc.vitrina.dev.lan"
+    - name: AUTO_HOST
+      value: "https://auto.svc.osago.dev.lan"
+    - name: AMAZING_SCORING_HOST
+      value: "https://amazing-scoring.svc.dobro.dev.lan"
+    - name: MARKETPLACE_API_HOST
+      value: "https://apigw.svc.mpl-credit-pipeline.yc.mpl-stage.sravni.market"
+    - name: PASSPORT_AUTHORITY_API_HOST
+      value: "https://passportauthority.svc.platform.dev.lan"
+    - name: CUSTOMER_SERVICE_API_HOST
+      value: "https://cs-customer.svc.bearlake.dev.lan"
+    - name: PHONE_VERIFIER_SERVICE_API_HOST
+      value: "https://phoneverifier.svc.platform.dev.lan"
+    - name: BDUI_SERVICE_HOST
+      value: "https://bdui.svc.bearlake.dev.lan"
+    - name: ADVERTISING_SERVICE_HOST
+      value: "https://advertising.svc.vitrina.dev.lan"
+    - name: AGREEMENT_SERVICE_HOST
+      value: "https://agreements.svc.platform.dev.lan"
+    - name: JAEGER_AGENT_HOST
+      valueFrom:
+        fieldRef:
+          fieldPath: status.hostIP
+    - name: JAEGER_AGENT_PORT
+      value: '6832'
+
+
+ingresses:
+- host: '{{ if ne .Values.Branch "master" }}{{ .Values.Branch }}.{{ end }}autosend.svc.bearlake.dev.lan'
+  ssl: enabled
+  class: internal
+  paths:
+  - /
+
+replicaCount: 1
+
+resources:
+  cpu: 50m
+  memory: 150Mi

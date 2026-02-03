@@ -1,0 +1,103 @@
+global:
+  vault:
+    addr: "https://vault.yc.prod.infra.sravni.market/"
+    role: "sravni-prod-k8s-workloads"
+    path: "sravni-prod-k8s-workloads"
+  image:
+    repository: registry.yc.prod.infra.sravni.market/bearlake_prod
+    tag: ""
+  imagePullSecrets:
+    - harbor-pull-secret
+
+app:
+  team: bearlake
+  port: 9034
+  probes:
+    livenessPath: "/internal/health"
+    readinessPath: "/internal/health"
+    initialDelaySeconds: 30
+  metrics:
+    path: "/internal/metrics"
+  env:
+    - name: SERVICE_NAME
+      value: "autosend-service"
+    - name: PORT
+      value: "9034"
+    - name: NODE_ENV
+      value: "production"
+    - name: ENV
+      value: "production"
+    - name: DEBUG_LOG
+      value: "false"
+    - name: CREDIT_SELECTION_HOST
+      value: "https://creditselection.svc.bearlake.prod-sravni.lan"
+    - name: CREDIT_SELECTION_RANKING_HOST
+      value: "https://creditselection-ranking.svc.bearlake.prod-sravni.lan"
+    - name: CREDIT_SELECTION_API_HOST
+      value: "https://creditselection-api.svc.bearlake.prod-sravni.lan"
+    - name: URL_SHRINKER_HOST
+      value: "https://urlshrinker.svc.platform.prod-sravni.lan"
+    - name: FORM_BUILDER_HOST
+      value: "https://fb.formbuilder.prod-sravni.lan"
+    - name: ISSUER_HOST
+      value: "https://sravni.id"
+    - name: ORGANIZATIONS_HOST
+      value: "https://organizations.svc.emergency.prod-sravni.lan"
+    - name: LOCATIONS_HOST
+      value: "https://locations.svc.platform.prod-sravni.lan"
+    - name: DADATA_HOST
+      value: "https://dadata.svc.platform.prod-sravni.lan"
+    - name: CREDIT_SELECTION_LOAN_RATE_HOST
+      value: "https://creditselection-loan-rate-service.svc.bearlake.prod-sravni.lan"
+    - name: LOANS_FORM_BUILDER_HOST
+      value: "https://loans.svc.formbuilder.prod-sravni.lan"
+    - name: SCORING_HOST
+      value: "https://scoring.svc.dobro.prod-mpl.lan"
+    - name: CREDITS_HOST
+      value: "https://credits.svc.vitrina.prod-sravni.lan"
+    - name: CARDS_HOST
+      value: "https://cards.svc.vitrina.prod-sravni.lan"
+    - name: AUTO_HOST
+      value: "https://auto.svc.osago.prod-sravni.lan"
+    - name: AMAZING_SCORING_HOST
+      value: "https://amazing-scoring.svc.dobro.prod-mpl.lan"
+    - name: MARKETPLACE_API_HOST
+      value: "https://apigw.svc.credit-pipeline.prod-mpl.lan"
+    - name: PASSPORT_AUTHORITY_API_HOST
+      value: "https://passportauthority.svc.platform.prod-sravni.lan"
+    - name: CUSTOMER_SERVICE_API_HOST
+      value: "https://cs-customer.svc.bearlake.prod-sravni.lan"
+    - name: PHONE_VERIFIER_SERVICE_API_HOST
+      value: "https://phoneverifier.svc.platform.prod-sravni.lan"
+    - name: BDUI_SERVICE_HOST
+      value: "https://bdui.svc.bearlake.prod-sravni.lan"
+    - name: ADVERTISING_SERVICE_HOST
+      value: "https://advertising.svc.vitrina.prod-sravni.lan"
+    - name: AGREEMENT_SERVICE_HOST
+      value: "https://agreements.svc.platform.prod-mpl.lan"
+    - name: JAEGER_AGENT_HOST
+      valueFrom:
+        fieldRef:
+          fieldPath: status.hostIP
+    - name: JAEGER_AGENT_PORT
+      value: '6832'
+
+replicaCount: 4
+
+resources:
+  cpu: 50m
+  memory: 150Mi
+
+ingresses:
+  - host: autosend.svc.bearlake.prod-sravni.lan
+    ssl: enabled
+    class: "internal"
+    paths:
+      - /
+
+slos:
+  - name: http_sli
+    objective: 95
+    totalQuery: sum(rate(http_requests_total{k8s=~"sravni-prod", service="autosend-service"}[{{.window}}]))
+    errorQuery: sum(rate(http_requests_total{k8s=~"sravni-prod", service="autosend-service", status_code=~"5.."}[{{.window}}]))
+    description: SLI по http вызовам
