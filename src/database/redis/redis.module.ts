@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import Redis from 'ioredis';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RedisService } from './redis.service';
-import {CustomLoggerService} from "@sravni/creditselection-utils/modules/custom-logger";
+import { CustomLoggerService } from '@sravni/creditselection-utils/modules/custom-logger';
 
 @Module({
   imports: [ConfigModule],

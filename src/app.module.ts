@@ -7,7 +7,7 @@ import { TracingModule } from '@sravni/nest-utils/tracing';
 import { LoggerModule } from '@sravni/nest-utils/logger';
 import { RequestsLoggerModule } from '@sravni/nest-utils/toolkit/modules/requests-logger';
 import { BullModule } from '@nestjs/bullmq';
-import {DelayAutosendModule} from "./modules/delay-autosend/delay-autosend.module";
+import { DelayAutosendModule } from './modules/delay-autosend/delay-autosend.module';
 
 ConfigModule.setServiceName('autosend-service');
 

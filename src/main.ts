@@ -1,8 +1,8 @@
 import { AppModule } from './app.module';
-import {Logger, ValidationPipe, VERSION_NEUTRAL, VersioningType} from '@nestjs/common';
+import { Logger, ValidationPipe, VERSION_NEUTRAL, VersioningType } from '@nestjs/common';
 import { ConfigProvider } from '@sravni/nest-utils/config';
 import { NestFactory } from '@nestjs/core';
-import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -12,11 +12,11 @@ async function bootstrap() {
   });
 
   app.useGlobalPipes(
-      new ValidationPipe({
-        whitelist: true,
-        transform: true,
-        forbidNonWhitelisted: true,
-      }),
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+      forbidNonWhitelisted: true,
+    }),
   );
 
   app.enableShutdownHooks();
@@ -27,12 +27,12 @@ async function bootstrap() {
 
   if (!isProduction) {
     const swaggerConfig = new DocumentBuilder()
-        .setTitle('Autosend Service API')
-        .setDescription('API for autosend scheduling')
-        .setVersion('1.0')
-        .build();
+      .setTitle('Autosend Service API')
+      .setDescription('API for autosend scheduling')
+      .setVersion('1.0')
+      .build();
     const document = SwaggerModule.createDocument(app, swaggerConfig);
-    SwaggerModule.setup('api', app, document);
+    SwaggerModule.setup('swagger', app, document);
   }
 
   await app.listen(port);

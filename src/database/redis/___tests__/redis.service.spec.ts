@@ -28,12 +28,7 @@ describe('WHEN "RedisService" is used', () => {
 
       await service.set(key, value);
 
-      expect(redisMock.set).toHaveBeenCalledWith(
-        key,
-        JSON.stringify(value),
-        'PX',
-        expect.any(Number),
-      );
+      expect(redisMock.set).toHaveBeenCalledWith(key, JSON.stringify(value), 'PX', expect.any(Number));
     });
 
     it('MUST store string values as-is', async () => {
@@ -42,12 +37,7 @@ describe('WHEN "RedisService" is used', () => {
 
       await service.set(key, value);
 
-      expect(redisMock.set).toHaveBeenCalledWith(
-        key,
-        value,
-        'PX',
-        expect.any(Number),
-      );
+      expect(redisMock.set).toHaveBeenCalledWith(key, value, 'PX', expect.any(Number));
     });
 
     it('AND not provided MUST use default TTL (1 day)', async () => {
@@ -55,12 +45,7 @@ describe('WHEN "RedisService" is used', () => {
       await service.set(key, 'value');
 
       const defaultTtl = 1000 * 60 * 60 * 24;
-      expect(redisMock.set).toHaveBeenCalledWith(
-        key,
-        'value',
-        'PX',
-        defaultTtl,
-      );
+      expect(redisMock.set).toHaveBeenCalledWith(key, 'value', 'PX', defaultTtl);
     });
 
     it('MUST allow overriding TTL', async () => {

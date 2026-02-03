@@ -6,8 +6,8 @@ import { CustomLoggerService } from '@sravni/creditselection-utils/modules/custo
 export class RedisService {
   private readonly ttlForDay = 1000 * 60 * 60 * 24; // 1 сутки
   constructor(
-      private readonly logger: CustomLoggerService,
-      @Inject('REDIS_CLIENT') private readonly redis: Redis,
+    private readonly logger: CustomLoggerService,
+    @Inject('REDIS_CLIENT') private readonly redis: Redis,
   ) {}
 
   async set(key: string, value: unknown, ttlMilliseconds: number = this.ttlForDay) {
