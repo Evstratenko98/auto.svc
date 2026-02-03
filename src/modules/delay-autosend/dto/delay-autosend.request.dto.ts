@@ -1,10 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { ArrayNotEmpty, IsArray, IsEnum, IsNotEmpty, IsNumber, IsOptional, Min } from 'class-validator';
-
-export enum DelayAutosendSource {
-  WEB = 'WEB',
-  APP = 'APP',
-}
+import { DELAY_AUTOSEND_SOURCE } from '../delay-autosend.constants';
 
 export class DelayAutosendRequestDto {
   @ApiProperty({ example: 123 })
@@ -12,26 +8,18 @@ export class DelayAutosendRequestDto {
   @IsNotEmpty()
   userId: number;
 
-  @ApiProperty({ type: [Object], example: [{ offerId: 1 }] })
+  @ApiProperty({ type: [Object], example: [{ id: 1 }] })
   @IsArray()
   @ArrayNotEmpty()
   offers: unknown[];
 
-  @ApiProperty({ enum: DelayAutosendSource, example: DelayAutosendSource.WEB })
-  @IsEnum(DelayAutosendSource)
-  source: DelayAutosendSource;
+  @ApiProperty({ enum: DELAY_AUTOSEND_SOURCE, example: DELAY_AUTOSEND_SOURCE.WEB })
+  @IsEnum(DELAY_AUTOSEND_SOURCE)
+  source: DELAY_AUTOSEND_SOURCE;
 
   @ApiPropertyOptional({ description: 'Delay in minutes', example: 45, default: 30 })
   @IsOptional()
   @IsNumber()
   @Min(1)
   delay?: number;
-}
-
-export class DelayAutosendResponseDto {
-  @ApiProperty({ example: true })
-  success: boolean;
-
-  @ApiProperty({ example: 'delayautosend_123' })
-  jobId: string;
 }

@@ -1,7 +1,8 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { DelayAutosendService } from './delay-autosend.service';
-import { DelayAutosendRequestDto, DelayAutosendResponseDto } from './dto/delay-autosend.dto';
+import { DelayAutosendResponseDto } from './dto/delay-autosend-response.dto';
+import { DelayAutosendRequestDto } from './dto/delay-autosend.request.dto';
 
 @ApiTags('delay-autosend')
 @Controller({ path: 'delay-autosend', version: '1' })

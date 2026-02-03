@@ -1,17 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { InjectQueue } from '@nestjs/bullmq';
 import { Queue } from 'bullmq';
-import { DelayAutosendRequestDto } from './dto/delay-autosend.dto';
-
-const DEFAULT_DELAY_MINUTES = 30;
+import { DelayAutosendRequestDto } from './dto/delay-autosend.request.dto';
+import { QUEUE_TITLE } from './delay-autosend.constants';
 
 @Injectable()
 export class DelayAutosendService {
+  private DEFAULT_DELAY_MINUTES = 30;
+
   constructor(@InjectQueue('delay-autosend') private readonly delayAutosendQueue: Queue) {}
 
-  async scheduleAutosend(payload: DelayAutosendRequestDto) {
-    const jobId = `delayautosend_${payload.userId}`;
-    const delayMinutes = payload.delay ?? DEFAULT_DELAY_MINUTES;
+  async scheduleAutosend(delayAutosendRequestDto: DelayAutosendRequestDto) {
+    const { userId, offers, source, delay } = delayAutosendRequestDto;
+    const jobId = `delayautosend_${userId}`;
+    const delayMinutes = delay ?? this.DEFAULT_DELAY_MINUTES;
     const delayMs = delayMinutes * 60 * 1000;
 
     const existingJob = await this.delayAutosendQueue.getJob(jobId);
@@ -20,12 +22,8 @@ export class DelayAutosendService {
     }
 
     await this.delayAutosendQueue.add(
-      'delay-autosend',
-      {
-        userId: payload.userId,
-        offers: payload.offers,
-        source: payload.source,
-      },
+      QUEUE_TITLE,
+      { userId, offers, source },
       {
         jobId,
         delay: delayMs,
