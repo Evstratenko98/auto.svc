@@ -8,7 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { CustomLoggerModule } from '../../common/logger/custom-logger.module';
 
 @Module({
-  imports: [HttpClientModule, MetricsModule, ConfigModule],
+  imports: [HttpClientModule, MetricsModule, ConfigModule, CustomLoggerModule],
   providers: [CustomerService, CustomerMappingService, CustomerApiService],
   exports: [CustomerService, CustomerMappingService, CustomerApiService],
 })

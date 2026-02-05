@@ -8,14 +8,18 @@ import { ConfigModule } from '@nestjs/config';
 import { CustomerModule } from '../customer/customer.module';
 import { HttpClientModule } from '../../common/http-client/http-client.module';
 import { IdentityModule } from '../identity/identity.module';
+import { CustomLoggerModule } from '../../common/logger/custom-logger.module';
+import { OpenIdModule } from '../openid/openid.module';
 
 @Module({
   imports: [
     HttpClientModule,
     BullModule.registerQueue({ name: 'delay-autosend' }),
     ConfigModule,
+    OpenIdModule,
     CustomerModule,
     IdentityModule,
+    CustomLoggerModule,
   ],
   controllers: [DelayAutosendController],
   providers: [DelayAutosendService, DelayAutosendConsumer, CustomerMappingService],

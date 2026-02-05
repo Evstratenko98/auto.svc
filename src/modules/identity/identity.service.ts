@@ -1,25 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import {
-  IdentityPhoneVerificationsEventModel,
-  IdentityPhoneVerificationsResultModel,
-  IdentityUserModel,
-} from './identity.types';
+import { IdentityPhoneVerificationsEventModel, IdentityPhoneVerificationsResultModel } from './identity.types';
 import { IdentityApiService } from './identity.api.service';
+import { CustomLoggerService } from '../../common/logger/custom-logger.service';
 
 @Injectable()
 export class IdentityService {
-  constructor(private readonly identityApiService: IdentityApiService) {}
+  constructor(
+    private readonly logger: CustomLoggerService,
+    private readonly identityApiService: IdentityApiService,
+  ) {}
 
-  async getPhoneVerifications(
-    userId: number,
-    clientIp?: string,
-  ): Promise<IdentityPhoneVerificationsResultModel | null> {
+  async getPhoneVerifications(userId: number): Promise<IdentityPhoneVerificationsResultModel | null> {
     try {
       const phoneVerifications = await this.identityApiService.getPhoneVerifications(userId);
 
       return phoneVerifications || null;
     } catch (error) {
-      // logger.error('getUserByPhone error', { error })
+      this.logger.error(error);
 
       return null;
     }

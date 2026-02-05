@@ -10,7 +10,7 @@ export class CustomerApiService {
     private readonly httpClient: HttpClientSrv,
     private readonly configService: ConfigService,
   ) {
-    this.serviceHost = this.configService.get('CUSTOMER');
+    this.serviceHost = this.configService.get('CUSTOMER_HOST');
   }
 
   async loadCustomer(userId: number): Promise<Customer> {

@@ -43,6 +43,7 @@ export const config = {
       },
     },
     [SERVICES.identity]: {
+      host: process.env.ISSUER_HOST || '',
       clientId: process.env.CLIENT_ID || '',
       clientSecret: process.env.CLIENT_SECRET || '',
       issuer: process.env.ISSUER_HOST || '',

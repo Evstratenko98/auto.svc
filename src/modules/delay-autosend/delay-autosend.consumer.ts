@@ -1,15 +1,16 @@
 import { Logger } from '@nestjs/common';
 import { Processor, WorkerHost } from '@nestjs/bullmq';
-import { Job, Queue } from 'bullmq';
+import { Job } from 'bullmq';
 import { QUEUE_TITLE } from './delay-autosend.constants';
 import { CustomerService } from '../customer/customer.service';
 import { DelayAutosendRequestDto } from './dto/delay-autosend.request.dto';
 import { IdentityService } from '../identity/identity.service';
+import { CustomLoggerService } from '../../common/logger/custom-logger.service';
 
 @Processor(QUEUE_TITLE)
 export class DelayAutosendConsumer extends WorkerHost {
-  private readonly logger = new Logger(DelayAutosendConsumer.name);
   constructor(
+    private readonly logger: CustomLoggerService,
     private readonly customerService: CustomerService,
     private readonly identityService: IdentityService,
   ) {
@@ -17,7 +18,8 @@ export class DelayAutosendConsumer extends WorkerHost {
   }
 
   async process(job: Job): Promise<void> {
-    this.logger.log(`Delay autosend job received: ${JSON.stringify(job)}`);
+    const { data } = job;
+    console.log(data);
   }
 
   async postApplications(delayAutosendRequestDto: DelayAutosendRequestDto): Promise<void> {
@@ -44,11 +46,14 @@ export class DelayAutosendConsumer extends WorkerHost {
         {
           userId,
           calcId,
+          source,
           customer: customerDataResult.value,
           phoneVerification: this.identityService.getCodeVerification(phoneVerificationResult.value),
         },
         offers,
       );
-    } catch (error) {}
+    } catch (error) {
+      this.logger.error(error);
+    }
   }
 }

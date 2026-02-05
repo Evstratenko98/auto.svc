@@ -3,10 +3,12 @@ import { CustomerMappingService } from './customer-mapping.service';
 import { PostApplicationsDto } from '../delay-autosend/dto/post-applications.dto';
 import { CsOffer } from '../credit-selection/credit-selection.types';
 import { CustomerApiService } from './customer.api.service';
+import { CustomLoggerService } from '../../common/logger/custom-logger.service';
 
 @Injectable()
 export class CustomerService {
   constructor(
+    private readonly logger: CustomLoggerService,
     private readonly customerMappingService: CustomerMappingService,
     private readonly customerApiService: CustomerApiService,
   ) {}
@@ -17,19 +19,25 @@ export class CustomerService {
 
       return customer || null;
     } catch (error) {
-      // this.logger.error(error)
+      this.logger.error(error);
 
       return null;
     }
   }
 
   async postApplications(postApplicationsDto: PostApplicationsDto, offers: Array<CsOffer>) {
-    const settledApplications = await Promise.allSettled(
-      offers.map((offer) =>
-        this.customerApiService.postApplication(
-          this.customerMappingService.mapOfferDataToApplications(postApplicationsDto, offer),
+    try {
+      const settledApplications = await Promise.allSettled(
+        offers.map((offer) =>
+          this.customerApiService.postApplication(
+            this.customerMappingService.mapOfferDataToApplications(postApplicationsDto, offer),
+          ),
         ),
-      ),
-    );
+      );
+    } catch (error) {
+      this.logger.error(error);
+
+      return null;
+    }
   }
 }

@@ -10,6 +10,7 @@ import { CustomerModule } from './modules/customer/customer.module';
 import { CustomLoggerModule } from './common/logger/custom-logger.module';
 import { DelayAutosendModule } from './modules/delay-autosend/delay-autosend.module';
 import { IdentityModule } from './modules/identity/identity.module';
+import { OpenIdModule } from './modules/openid/openid.module';
 // import { CustomLoggerModule } from '@sravni/creditselection-utils/modules/custom-logger';
 
 ConfigModule.setServiceName('autosend-service');
@@ -29,6 +30,7 @@ ConfigModule.setServiceName('autosend-service');
         password: process.env.REDIS_PASSWORD,
       },
     }),
+    OpenIdModule,
     DelayAutosendModule,
     CustomerModule,
     IdentityModule,

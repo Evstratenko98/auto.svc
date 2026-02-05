@@ -5,7 +5,7 @@ import { parsePeriodToTerm } from '../delay-autosend/utils/period-to-term-and-un
 
 export class CustomerMappingService {
   mapOfferDataToApplications(postApplication: PostApplicationsDto, offer: CsOffer): CustomerApplication {
-    const { phoneVerification, customer, calcId, userId } = postApplication;
+    const { phoneVerification, customer, calcId, userId, source } = postApplication;
     const loanGrace: {
       loanGracePeriodUnit?: 'month' | 'day';
       loanGracePeriod?: number;
@@ -22,7 +22,7 @@ export class CustomerMappingService {
         dateTime: phoneVerification.date,
       },
       client: {
-        channel: 'Web',
+        channel: source,
         sourceUrl: 'Delay-autosend',
         ip: 'Delay-autosend',
         deviceType: 'Delay-autosend',
