@@ -13,7 +13,7 @@ export class IdentityApiService {
   private serviceHost = config.services[SERVICES.identity].host;
 
   private async get<T, D = unknown>(url: string, params?: D, metricsURL = url): Promise<T> {
-    const headers = {}; // await this.openIdService.getAuthHeaders();
+    const headers = await this.openIdService.getAuthHeaders();
 
     const { data } = await this.httpClient.get<T>({
       url,
