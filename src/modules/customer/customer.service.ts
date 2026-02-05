@@ -4,6 +4,8 @@ import { PostApplicationsDto } from '../delay-autosend/dto/post-applications.dto
 import { CsOffer } from '../credit-selection/credit-selection.types';
 import { CustomerApiService } from './customer.api.service';
 import { CustomLoggerService } from '../../common/logger/custom-logger.service';
+import {Counter} from "@sravni/nest-utils/toolkit/modules/metrics/providers";
+import {JOB_REASONS} from "../delay-autosend/delay-autosend.constants";
 
 @Injectable()
 export class CustomerService {
@@ -25,7 +27,7 @@ export class CustomerService {
     }
   }
 
-  async postApplications(postApplicationsDto: PostApplicationsDto, offers: Array<CsOffer>) {
+  async postApplications(postApplicationsDto: PostApplicationsDto, offers: Array<CsOffer>, completedJobCount: Counter) {
     try {
       const settledApplications = await Promise.allSettled(
         offers.map((offer) =>
@@ -34,6 +36,20 @@ export class CustomerService {
           ),
         ),
       );
+
+      settledApplications.map((settledApplication) => {
+        if(settledApplication.status === 'rejected') {
+          completedJobCount.inc({
+            status: JOB_REASONS.APPLICATION_SEND_ERROR,
+          })
+        }
+
+        if (settledApplication.status === 'fulfilled') {
+          completedJobCount.inc({
+            status: JOB_REASONS.SUCCESS,
+          })
+        }
+      })
     } catch (error) {
       this.logger.error(error);
 

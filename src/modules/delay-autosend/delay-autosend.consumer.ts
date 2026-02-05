@@ -34,6 +34,7 @@ export class DelayAutosendConsumer extends WorkerHost {
 
   async process(job: Job<DelayAutosendRequestDto>): Promise<void> {
     const { data } = job;
+    console.log(data);
     this.jobCount.inc()
 
     await this.postApplications(data);
@@ -74,6 +75,7 @@ export class DelayAutosendConsumer extends WorkerHost {
           phoneVerification: this.identityService.getCodeVerification(phoneVerificationResult.value),
         },
         offers,
+        this.completedJobCount
       );
     } catch (error) {
       this.completedJobCount.inc({
