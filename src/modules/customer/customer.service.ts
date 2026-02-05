@@ -21,6 +21,7 @@ export class CustomerService {
 
       return customer || null;
     } catch (error) {
+      console.log(error)
       this.logger.error(error);
 
       return null;
@@ -42,12 +43,14 @@ export class CustomerService {
           completedJobCount.inc({
             status: JOB_REASONS.APPLICATION_SEND_ERROR,
           })
+          console.log(settledApplication.reason);
         }
 
         if (settledApplication.status === 'fulfilled') {
           completedJobCount.inc({
             status: JOB_REASONS.SUCCESS,
           })
+          console.log(settledApplication.value);
         }
       })
     } catch (error) {

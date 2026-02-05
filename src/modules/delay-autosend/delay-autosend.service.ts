@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectQueue } from '@nestjs/bullmq';
 import { Queue } from 'bullmq';
 import { DelayAutosendRequestDto } from './dto/delay-autosend.request.dto';
@@ -31,7 +31,7 @@ export class DelayAutosendService {
         { userId, offers, source, calcId },
         {
           jobId,
-          delay: delayMs,
+          delay: 0,
         },
       );
 

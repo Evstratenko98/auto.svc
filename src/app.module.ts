@@ -11,7 +11,7 @@ import { CustomLoggerModule } from './common/logger/custom-logger.module';
 import { DelayAutosendModule } from './modules/delay-autosend/delay-autosend.module';
 import { IdentityModule } from './modules/identity/identity.module';
 import { OpenIdModule } from './modules/openid/openid.module';
-// import { CustomLoggerModule } from '@sravni/creditselection-utils/modules/custom-logger';
+import {CustomHttpExceptionFilter} from "./common/exception-filters/custom-http-exception-filter";
 
 ConfigModule.setServiceName('autosend-service');
 
@@ -35,11 +35,11 @@ ConfigModule.setServiceName('autosend-service');
     CustomerModule,
     IdentityModule,
   ],
-  // providers: [
-  //   {
-  //     provide: 'APP_FILTER',
-  //     useClass: CustomHttpExceptionFilter,
-  //   },
-  // ],
+  providers: [
+    {
+      provide: 'APP_FILTER',
+      useClass: CustomHttpExceptionFilter,
+    },
+  ],
 })
 export class AppModule {}

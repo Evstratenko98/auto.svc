@@ -23,10 +23,10 @@ export class CustomerMappingService {
       },
       client: {
         channel: source,
-        sourceUrl: 'Delay-autosend',
-        ip: 'Delay-autosend',
-        deviceType: 'Delay-autosend',
-        userAgent: 'Delay-autosend',
+        sourceUrl: '//autosend-service/delay-autosend',
+        ip: '3e28:dd2b:b621:00f9:cd40:941d:4fbe:4027',
+        deviceType: source,
+        userAgent: source,
       },
       analytics: {
         // utmSource: analytics.utmSource,

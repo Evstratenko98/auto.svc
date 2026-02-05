@@ -56,6 +56,7 @@ export class DelayAutosendConsumer extends WorkerHost {
         this.completedJobCount.inc({
           status: JOB_REASONS.NO_PHONE_VERIFICATION_CODE
         })
+        console.log(JOB_REASONS.NO_PHONE_VERIFICATION_CODE);
         return;
       }
 
@@ -63,6 +64,7 @@ export class DelayAutosendConsumer extends WorkerHost {
         this.completedJobCount.inc({
           status: JOB_REASONS.NO_CUSTOMER_DATA
         })
+        console.log(JOB_REASONS.NO_CUSTOMER_DATA);
         return;
       }
 
@@ -81,6 +83,7 @@ export class DelayAutosendConsumer extends WorkerHost {
       this.completedJobCount.inc({
         status: JOB_REASONS.UNKNOWN
       })
+      console.log(JOB_REASONS.UNKNOWN);
       this.logger.error(error);
     }
   }
