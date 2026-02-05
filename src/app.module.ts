@@ -11,7 +11,7 @@ import { CustomLoggerModule } from './common/logger/custom-logger.module';
 import { DelayAutosendModule } from './modules/delay-autosend/delay-autosend.module';
 import { IdentityModule } from './modules/identity/identity.module';
 import { OpenIdModule } from './modules/openid/openid.module';
-import {CustomHttpExceptionFilter} from "./common/exception-filters/custom-http-exception-filter";
+import { CustomHttpExceptionFilter } from './common/exception-filters/custom-http-exception-filter';
 
 ConfigModule.setServiceName('autosend-service');
 

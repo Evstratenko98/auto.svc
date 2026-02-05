@@ -4,8 +4,8 @@ import { PostApplicationsDto } from '../delay-autosend/dto/post-applications.dto
 import { CsOffer } from '../credit-selection/credit-selection.types';
 import { CustomerApiService } from './customer.api.service';
 import { CustomLoggerService } from '../../common/logger/custom-logger.service';
-import {Counter} from "@sravni/nest-utils/toolkit/modules/metrics/providers";
-import {JOB_REASONS} from "../delay-autosend/delay-autosend.constants";
+import { Counter } from '@sravni/nest-utils/toolkit/modules/metrics/providers';
+import { JOB_REASONS } from '../delay-autosend/delay-autosend.constants';
 
 @Injectable()
 export class CustomerService {
@@ -21,7 +21,7 @@ export class CustomerService {
 
       return customer || null;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       this.logger.error(error);
 
       return null;
@@ -39,20 +39,20 @@ export class CustomerService {
       );
 
       settledApplications.map((settledApplication) => {
-        if(settledApplication.status === 'rejected') {
+        if (settledApplication.status === 'rejected') {
           completedJobCount.inc({
             status: JOB_REASONS.APPLICATION_SEND_ERROR,
-          })
+          });
           console.log(settledApplication.reason);
         }
 
         if (settledApplication.status === 'fulfilled') {
           completedJobCount.inc({
             status: JOB_REASONS.SUCCESS,
-          })
+          });
           console.log(settledApplication.value);
         }
-      })
+      });
     } catch (error) {
       this.logger.error(error);
 
