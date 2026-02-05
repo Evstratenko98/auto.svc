@@ -45,12 +45,11 @@ export const config = {
     [SERVICES.identity]: {
       clientId: process.env.CLIENT_ID || '',
       clientSecret: process.env.CLIENT_SECRET || '',
-      issuer: process.env.ISSUER || '',
+      issuer: process.env.ISSUER_HOST || '',
       webPath: process.env.WEB_PATH || '',
-      serviceName: process.env.ID_SERVICE_NAME || 'creditselection.autosend',
     },
     [SERVICES.creditSelectionCustomerService]: {
-      serviceName: process.env.CUSTOMER_HOST || 'creditselection-customer-service',
+      serviceName: process.env.CUSTOMER_HOST,
     },
   },
   logger: {

@@ -51,6 +51,8 @@ app:
           fieldPath: status.hostIP
     - name: JAEGER_AGENT_PORT
       value: '6832'
+    - name: WEB_PATH
+      value: 'autosend.svc.bearlake.prod-sravni.lan'
 
 replicaCount: 4
 

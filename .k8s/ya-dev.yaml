@@ -49,6 +49,8 @@ app:
           fieldPath: status.hostIP
     - name: JAEGER_AGENT_PORT
       value: '6832'
+    - name: WEB_PATH
+      value: '{{ if ne .Values.Branch "master" }}{{ .Values.Branch }}.{{ end }}autosend.svc.bearlake.dev.lan'
 
 
 ingresses:
