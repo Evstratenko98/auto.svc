@@ -50,7 +50,7 @@ export const config = {
       serviceName: process.env.ID_SERVICE_NAME || 'creditselection.autosend',
     },
     [SERVICES.creditSelectionCustomerService]: {
-      serviceName: process.env.CUSTOMER || 'creditselection-customer-service',
+      serviceName: process.env.CUSTOMER_HOST || 'creditselection-customer-service',
     },
   },
   logger: {
