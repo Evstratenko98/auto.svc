@@ -309,6 +309,11 @@
     core-js-pure "^3.30.2"
     regenerator-runtime "^0.14.0"
 
+"@babel/runtime@^7.28.6":
+  version "7.28.6"
+  resolved "https://artifactory.yc.prod.infra.sravni.market:443/artifactory/api/npm/sravni_npm_group/@babel/runtime/-/runtime-7.28.6.tgz#d267a43cb1836dc4d182cce93ae75ba954ef6d2b"
+  integrity sha512-05WQkdpL9COIMz4LjTxGpPNCdlpyimKppYNoJ5Di5EUObifl8t4tuLuUBBZEpoLYOmfvIWrsp9fCl0HoPRVTdA==
+
 "@babel/template@^7.25.9", "@babel/template@^7.3.3":
   version "7.25.9"
   resolved "https://artifactory.yc.prod.infra.sravni.market/artifactory/api/npm/sravni_npm_group/@babel/template/-/template-7.25.9.tgz#ecb62d81a8a6f5dc5fe8abfc3901fc52ddf15016"
@@ -3331,6 +3336,16 @@
   resolved "https://artifactory.yc.prod.infra.sravni.market:443/artifactory/api/npm/sravni_npm_group/@sravni/types-0.0.8-npm.tgz#833a6902e833a314b48471d9df64a81840df3bde"
   integrity sha512-WCLRoVVMcsmbwX5U5qvheHcWr6CCz7Yc+AOJ+gDgZLelyItyQ5c+pJB9bsFI75WDmimxRv3Oaw7P7b5XPDViTg==
 
+"@sravni/utils@4.4.16":
+  version "4.4.16"
+  resolved "https://artifactory.yc.prod.infra.sravni.market:443/artifactory/api/npm/sravni_npm_group/@sravni/utils-4.4.16-npm.tgz#b1ab084f99a2d3611c386e6ad683156209c42378"
+  integrity sha512-Bxx/1Ab/1O3kEGQwmVDzBYuNkHyYUWCAdwBljWSKaIy9+Ri8jn7OhPWBlMErogA/kQbEICEGGkC3s7JP4a76Fw==
+  dependencies:
+    deep-object-diff "^1.1.9"
+    fast-deep-equal "^3.1.3"
+    is-ua-webview "^1.1.2"
+    js-cookie "^3.0.1"
+
 "@stoplight/json-ref-resolver@^3.1.1":
   version "3.1.6"
   resolved "https://artifactory.yc.prod.infra.sravni.market/artifactory/api/npm/sravni_npm_group/@stoplight/json-ref-resolver/-/json-ref-resolver-3.1.6.tgz#dcf8724472b7d54e8e8952510f39b8ee901dcf56"
@@ -5745,6 +5760,11 @@ deep-is@^0.1.3:
   resolved "https://artifactory.yc.prod.infra.sravni.market/artifactory/api/npm/sravni_npm_group/deep-is/-/deep-is-0.1.4.tgz#a6f2dce612fadd2ef1f519b73551f17e85199831"
   integrity sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==
 
+deep-object-diff@^1.1.9:
+  version "1.1.9"
+  resolved "https://artifactory.yc.prod.infra.sravni.market:443/artifactory/api/npm/sravni_npm_group/deep-object-diff/-/deep-object-diff-1.1.9.tgz#6df7ef035ad6a0caa44479c536ed7b02570f4595"
+  integrity sha512-Rn+RuwkmkDwCi2/oXOFS9Gsr5lJZu/yTGpK7wAaAIE75CC+LCGEZHpY6VQJa/RoJcrmaA/docWJZvYohlNkWPA==
+
 deepmerge@^4.2.2:
   version "4.3.1"
   resolved "https://artifactory.yc.prod.infra.sravni.market/artifactory/api/npm/sravni_npm_group/deepmerge/-/deepmerge-4.3.1.tgz#44b5f2147cd3b00d4b56137685966f26fd25dd4a"
@@ -7520,6 +7540,11 @@ is-typedarray@^1.0.0:
   resolved "https://artifactory.yc.prod.infra.sravni.market/artifactory/api/npm/sravni_npm_group/is-typedarray/-/is-typedarray-1.0.0.tgz#e479c80858df0c1b11ddda6940f96011fcda4a9a"
   integrity sha512-cyA56iCMHAh5CdzjJIa4aohJyeO1YbwLi3Jc35MmRU6poroFjIGZzUzupGiRPOjgHg9TLu43xbpwXk523fMxKA==
 
+is-ua-webview@^1.1.2:
+  version "1.1.2"
+  resolved "https://artifactory.yc.prod.infra.sravni.market:443/artifactory/api/npm/sravni_npm_group/is-ua-webview/-/is-ua-webview-1.1.2.tgz#20db1e21f0125dd0bd6422714e7de64a47a3cc4b"
+  integrity sha512-xX3WpvJGmT0EjmGRQxs4AgaBd4EWNr4lWCWGOgd40by6DWOQZN9RIOCsEaVp41crZqzWr8AsM+2x8UC2ZAuLPA==
+
 is-unicode-supported@^0.1.0:
   version "0.1.0"
   resolved "https://artifactory.yc.prod.infra.sravni.market/artifactory/api/npm/sravni_npm_group/is-unicode-supported/-/is-unicode-supported-0.1.0.tgz#3f26c76a809593b52bfa2ecb5710ed2779b522a7"
@@ -8072,7 +8097,7 @@ js-beautify@^1.6.12:
     js-cookie "^3.0.5"
     nopt "^7.2.1"
 
-js-cookie@^3.0.5:
+js-cookie@^3.0.1, js-cookie@^3.0.5:
   version "3.0.5"
   resolved "https://artifactory.yc.prod.infra.sravni.market:443/artifactory/api/npm/sravni_npm_group/js-cookie/-/js-cookie-3.0.5.tgz#0b7e2fd0c01552c58ba86e0841f94dc2557dcdbc"
   integrity sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw==

@@ -10,6 +10,7 @@ import { HttpClientModule } from '../../common/http-client/http-client.module';
 import { IdentityModule } from '../identity/identity.module';
 import { CustomLoggerModule } from '../../common/logger/custom-logger.module';
 import { OpenIdModule } from '../openid/openid.module';
+import { MetricsModule } from '@sravni/nest-utils/toolkit/modules/metrics';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { OpenIdModule } from '../openid/openid.module';
     BullModule.registerQueue({ name: 'delay-autosend' }),
     ConfigModule,
     OpenIdModule,
+    MetricsModule,
     CustomerModule,
     IdentityModule,
     CustomLoggerModule,

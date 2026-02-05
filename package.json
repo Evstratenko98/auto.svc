@@ -23,6 +23,7 @@
     "openapi-generate": "sh openapi-generate-types.sh"
   },
   "dependencies": {
+    "@babel/runtime": "^7.28.6",
     "@nestjs/bullmq": "^11.0.4",
     "@nestjs/cache-manager": "^2.2.2",
     "@nestjs/common": "^10.0.0",
@@ -33,6 +34,7 @@
     "@sravni/creditselection-utils": "0.0.14",
     "@sravni/nest-utils": "1.1.15",
     "@sravni/server-utils": "0.4.0-beta.35",
+    "@sravni/utils": "4.4.16",
     "axios": "^1.7.7",
     "axios-retry": "^4.5.0",
     "bullmq": "^5.67.2",

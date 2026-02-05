@@ -1,25 +1,42 @@
-import { Logger } from '@nestjs/common';
 import { Processor, WorkerHost } from '@nestjs/bullmq';
 import { Job } from 'bullmq';
-import { QUEUE_TITLE } from './delay-autosend.constants';
+import {JOB_REASONS, QUEUE_TITLE} from './delay-autosend.constants';
 import { CustomerService } from '../customer/customer.service';
 import { DelayAutosendRequestDto } from './dto/delay-autosend.request.dto';
 import { IdentityService } from '../identity/identity.service';
 import { CustomLoggerService } from '../../common/logger/custom-logger.service';
+import {Counter, MetricsProvider} from "@sravni/nest-utils/toolkit/modules/metrics/providers";
 
 @Processor(QUEUE_TITLE)
 export class DelayAutosendConsumer extends WorkerHost {
+  private jobCount: Counter;
+  private completedJobCount: Counter;
+
   constructor(
+    private readonly metricsProvider: MetricsProvider,
     private readonly logger: CustomLoggerService,
     private readonly customerService: CustomerService,
     private readonly identityService: IdentityService,
   ) {
     super();
+
+    this.jobCount = this.metricsProvider.counter(
+        'autosend_job_count',
+        'count of job autosend',
+    );
+
+    this.completedJobCount = this.metricsProvider.counter(
+        'autosend_completed_job_count',
+        'count of completed job autosend',
+        ['status']
+    );
   }
 
-  async process(job: Job): Promise<void> {
+  async process(job: Job<DelayAutosendRequestDto>): Promise<void> {
     const { data } = job;
-    console.log(data);
+    this.jobCount.inc()
+
+    await this.postApplications(data);
   }
 
   async postApplications(delayAutosendRequestDto: DelayAutosendRequestDto): Promise<void> {
@@ -35,10 +52,16 @@ export class DelayAutosendConsumer extends WorkerHost {
         phoneVerificationResult.status === 'rejected' ||
         !this.identityService.hasCodeVerification(phoneVerificationResult.value)
       ) {
+        this.completedJobCount.inc({
+          status: JOB_REASONS.NO_PHONE_VERIFICATION_CODE
+        })
         return;
       }
 
       if (customerDataResult.status === 'rejected' || !customerDataResult.value) {
+        this.completedJobCount.inc({
+          status: JOB_REASONS.NO_CUSTOMER_DATA
+        })
         return;
       }
 
@@ -53,6 +76,9 @@ export class DelayAutosendConsumer extends WorkerHost {
         offers,
       );
     } catch (error) {
+      this.completedJobCount.inc({
+        status: JOB_REASONS.UNKNOWN
+      })
       this.logger.error(error);
     }
   }
