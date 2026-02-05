@@ -16,7 +16,7 @@ export class CustomerMappingService {
         }
       : {};
 
-    return {
+    const result =  {
       consents: {
         code: phoneVerification.code,
         dateTime: phoneVerification.date,
@@ -53,5 +53,8 @@ export class CustomerMappingService {
         ...loanGrace,
       },
     };
+    console.log(JSON.stringify(result));
+
+    return result
   }
 }

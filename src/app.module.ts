@@ -12,6 +12,9 @@ import { DelayAutosendModule } from './modules/delay-autosend/delay-autosend.mod
 import { IdentityModule } from './modules/identity/identity.module';
 import { OpenIdModule } from './modules/openid/openid.module';
 import { CustomHttpExceptionFilter } from './common/exception-filters/custom-http-exception-filter';
+import {ClsModule} from "nestjs-cls";
+import {HEADERS} from "./common/constants/headers.constants";
+import {ApdexModule} from "./common/apdex/apdex.module";
 
 ConfigModule.setServiceName('autosend-service');
 
@@ -34,12 +37,21 @@ ConfigModule.setServiceName('autosend-service');
     DelayAutosendModule,
     CustomerModule,
     IdentityModule,
+    ClsModule.forRoot({
+      global: true,
+      middleware: {
+        mount: true,
+        generateId: true,
+        idGenerator: (req: Request) => req.headers[HEADERS.TRACE_ID] ?? 1,
+      },
+    }),
+    ApdexModule,
   ],
-  providers: [
-    {
-      provide: 'APP_FILTER',
-      useClass: CustomHttpExceptionFilter,
-    },
-  ],
+  // providers: [
+  //   {
+  //     provide: 'APP_FILTER',
+  //     useClass: CustomHttpExceptionFilter,
+  //   },
+  // ],
 })
 export class AppModule {}

@@ -2,11 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { HttpClientSrv } from '../../common/http-client/http-client.service';
 import { Customer, CustomerApplication, CustomerApplicationResponse, LoadCustomerParams } from './customer.types';
 import { ConfigService } from '@nestjs/config';
+import {CustomLoggerService} from "../../common/logger/custom-logger.service";
 
 @Injectable()
 export class CustomerApiService {
   private serviceHost;
   constructor(
+    private readonly logger: CustomLoggerService,
     private readonly httpClient: HttpClientSrv,
     private readonly configService: ConfigService,
   ) {
@@ -33,13 +35,19 @@ export class CustomerApiService {
   }
 
   async postApplication(application: CustomerApplication) {
-    const url = `${this.serviceHost}/v1/loans/applications`;
-    const { data } = await this.httpClient.post<CustomerApplicationResponse>({
-      url,
-      data: application,
-      metricsURL: url,
-    });
+    try {
+      const url = `${this.serviceHost}/v1/loans/applications`;
+      const {data} = await this.httpClient.post<CustomerApplicationResponse>({
+        url,
+        data: application,
+        metricsURL: url,
+      });
 
-    return data;
+      return data;
+    } catch(error) {
+      this.logger.error(error);
+
+      return null;
+    }
   }
 }
