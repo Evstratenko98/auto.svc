@@ -6,7 +6,14 @@ import { EExporterType, ESamplerType } from '@sravni/nest-utils/tracing/enums';
 import { debugLog, isProduction, isStaging } from './helpers';
 
 dotenv.config();
-export const config = (): TConfig => ({
+
+export const SERVICES = {
+  autosend: 'autosend-service',
+  identity: 'identity',
+  creditSelectionCustomerService: 'creditselection-customer-service',
+};
+
+export const config = {
   metrics: {
     percentiles: [0.01, 0.1, 0.9, 0.95, 0.99],
     buckets: [100, 200, 250, 300, 600, 900, 1000, 1200, 1500, 2000, 3000, 4000, 5000],
@@ -29,11 +36,21 @@ export const config = (): TConfig => ({
     },
   },
   services: {
-    ['autosend-service']: {
-      name: 'autosend-service',
+    [SERVICES.autosend]: {
+      name: SERVICES.autosend,
       service: {
         port: Number(process.env.PORT),
       },
+    },
+    [SERVICES.identity]: {
+      clientId: process.env.CLIENT_ID || '',
+      clientSecret: process.env.CLIENT_SECRET || '',
+      issuer: process.env.ISSUER || '',
+      webPath: process.env.WEB_PATH || '',
+      serviceName: process.env.ID_SERVICE_NAME || 'creditselection.autosend',
+    },
+    [SERVICES.creditSelectionCustomerService]: {
+      serviceName: process.env.CUSTOMER || 'creditselection-customer-service',
     },
   },
   logger: {
@@ -42,4 +59,4 @@ export const config = (): TConfig => ({
       Boolean,
     ),
   },
-});
+};

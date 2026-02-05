@@ -3,10 +3,21 @@ import { BullModule } from '@nestjs/bullmq';
 import { DelayAutosendController } from './delay-autosend.controller';
 import { DelayAutosendService } from './delay-autosend.service';
 import { DelayAutosendConsumer } from './delay-autosend.consumer';
+import { CustomerMappingService } from '../customer/customer-mapping.service';
+import { ConfigModule } from '@nestjs/config';
+import { CustomerModule } from '../customer/customer.module';
+import { HttpClientModule } from '../../common/http-client/http-client.module';
+import { IdentityModule } from '../identity/identity.module';
 
 @Module({
-  imports: [BullModule.registerQueue({ name: 'delay-autosend' })],
+  imports: [
+    HttpClientModule,
+    BullModule.registerQueue({ name: 'delay-autosend' }),
+    ConfigModule,
+    CustomerModule,
+    IdentityModule,
+  ],
   controllers: [DelayAutosendController],
-  providers: [DelayAutosendService, DelayAutosendConsumer],
+  providers: [DelayAutosendService, DelayAutosendConsumer, CustomerMappingService],
 })
 export class DelayAutosendModule {}

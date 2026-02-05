@@ -3002,10 +3002,10 @@
   resolved "https://artifactory.yc.prod.infra.sravni.market/artifactory/api/npm/sravni_npm_group/@socket.io/component-emitter/-/component-emitter-3.1.2.tgz#821f8442f4175d8f0467b9daf26e3a18e2d02af2"
   integrity sha512-9BCxFwvbGg/RsZK9tjXd8s4UcwR0MWeFQ1XEKIQVVvAGJyINdrqKMcTRyLoK8Rse1GjzLV9cwjWV1olXRWEXVA==
 
-"@sravni/creditselection-utils@0.0.15":
-  version "0.0.15"
-  resolved "https://artifactory.yc.prod.infra.sravni.market:443/artifactory/api/npm/sravni_npm_group/@sravni/creditselection-utils/-/@sravni/creditselection-utils-0.0.15.tgz#6546b69130a2a950820dc34fcbbf10c8d521f065"
-  integrity sha512-4X4W37lvz4Mzp4ijMftZSDhR8FMZlelohatZ13uSUoPNyb6MwT/+4JhbFVf5vMeX2pSNqNLcw2RdoVZjzYNZJA==
+"@sravni/creditselection-utils@0.0.14":
+  version "0.0.14"
+  resolved "https://artifactory.yc.prod.infra.sravni.market:443/artifactory/api/npm/sravni_npm_group/@sravni/creditselection-utils/-/@sravni/creditselection-utils-0.0.14.tgz#4801a15cd8a2868e468dc098aed604852498d08a"
+  integrity sha512-RquKsdY4CW44XjsAj1u2wDmOFvPzuRNdDK0fDTmC3gluhfABtW4zFGzQ7OkcaR5LZqkLsRiYFXux5pFsjvwvDA==
   dependencies:
     "@sravni/koa-utils" "0.4.4"
     "@sravni/nest-utils" "^1.1.16-TP-1840.11"
@@ -3238,6 +3238,29 @@
     redis "^4.6.7"
     redis-depricated "npm:redis@2.8.0"
     redis-mock-depricated "npm:redis-mock@0.47.0"
+
+"@sravni/server-utils@0.4.0-beta.35":
+  version "0.4.0-beta.35"
+  resolved "https://artifactory.yc.prod.infra.sravni.market:443/artifactory/api/npm/sravni_npm_group/@sravni/server-utils-0.4.0-beta.35-npm.tgz#0798f963196e117b3655b6adc63f121767b10820"
+  integrity sha512-5B2BmBoDbL+MJiO/yI/zbJOPoc2BhQUlZK/0v6fmxLySj9sIR818cjGS4zUN2Wzu/nptQlTiO4VqYa8XmDRQJQ==
+  dependencies:
+    align-text "^1.0.2"
+    aws-sdk "^2.1044.0"
+    axios "^1.3.4"
+    chalk "^4.1.2"
+    cookies "^0.8.0"
+    jaeger-client "^3.19.0"
+    jsonpack "^1.1.5"
+    jsonwebtoken "^8.5.1"
+    jwks-rsa "^2.0.5"
+    lodash "^4.17.21"
+    lru-cache "^6.0.0"
+    mime-types "^2.1.34"
+    openid-client "^5.6.5"
+    opentracing "^0.14.5"
+    prom-client "12.0.0"
+    querystring "^0.2.1"
+    redis "^4.6.7"
 
 "@sravni/server@4.22.5", "@sravni/server@^4.17.0":
   version "4.22.5"
@@ -8183,6 +8206,11 @@ jsonfile@^6.0.1:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
+jsonpack@^1.1.5:
+  version "1.1.5"
+  resolved "https://artifactory.yc.prod.infra.sravni.market:443/artifactory/api/npm/sravni_npm_group/jsonpack/-/jsonpack-1.1.5.tgz#d42b0dcfd91ac58ef3110f96d2c599404c3dc27c"
+  integrity sha512-d2vwomK605ks7Q+uCpbwGyoIF5j+UZuJjlYcugISBt3CxM+eBo/W6y63yVPIyIvbYON+pvJYsYZjCYbzqJj/xQ==
+
 jsonwebtoken@^8.5.1:
   version "8.5.1"
   resolved "https://artifactory.yc.prod.infra.sravni.market:443/artifactory/api/npm/sravni_npm_group/jsonwebtoken/-/jsonwebtoken-8.5.1.tgz#00e71e0b8df54c2121a1f26137df2280673bcc0d"
@@ -9277,7 +9305,7 @@ openid-client@^3.15.10:
     oidc-token-hash "^5.0.0"
     p-any "^3.0.0"
 
-openid-client@^5.1.8:
+openid-client@^5.1.8, openid-client@^5.6.5:
   version "5.7.1"
   resolved "https://artifactory.yc.prod.infra.sravni.market:443/artifactory/api/npm/sravni_npm_group/openid-client/-/openid-client-5.7.1.tgz#34cace862a3e6472ed7d0a8616ef73b7fb85a9c3"
   integrity sha512-jDBPgSVfTnkIh71Hg9pRvtJc6wTwqjRkN88+gCFtYWrlP4Yx2Dsrow8uPi3qLr/aeymPF3o2+dS+wOpglK04ew==

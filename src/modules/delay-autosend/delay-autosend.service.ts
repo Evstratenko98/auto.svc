@@ -2,8 +2,8 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectQueue } from '@nestjs/bullmq';
 import { Queue } from 'bullmq';
 import { DelayAutosendRequestDto } from './dto/delay-autosend.request.dto';
-import { QUEUE_TITLE } from './delay-autosend.constants';
-import {CustomLoggerService} from "@sravni/creditselection-utils/modules/custom-logger";
+import { JOB_PREFIX, QUEUE_TITLE } from './delay-autosend.constants';
+import { CustomLoggerService } from '@sravni/creditselection-utils/modules/custom-logger';
 
 @Injectable()
 export class DelayAutosendService {
@@ -15,7 +15,7 @@ export class DelayAutosendService {
   async scheduleAutosend(delayAutosendRequestDto: DelayAutosendRequestDto) {
     try {
       const { userId, offers, source, delay } = delayAutosendRequestDto;
-      const jobId = `delayautosend_${userId}`;
+      const jobId = `${JOB_PREFIX}_${userId}`;
       const delayMinutes = delay ?? this.DEFAULT_DELAY_MINUTES;
       const delayMs = delayMinutes * 60 * 1000;
 

@@ -5,18 +5,21 @@ import { Module } from '@nestjs/common';
 import { MetricsModule } from '@sravni/nest-utils/toolkit/modules/metrics';
 import { TracingModule } from '@sravni/nest-utils/tracing';
 import { LoggerModule } from '@sravni/nest-utils/logger';
-import { RequestsLoggerModule } from '@sravni/nest-utils/toolkit/modules/requests-logger';
 import { BullModule } from '@nestjs/bullmq';
+import { CustomerModule } from './modules/customer/customer.module';
+import { CustomLoggerModule } from './common/logger/custom-logger.module';
 import { DelayAutosendModule } from './modules/delay-autosend/delay-autosend.module';
+import { IdentityModule } from './modules/identity/identity.module';
+// import { CustomLoggerModule } from '@sravni/creditselection-utils/modules/custom-logger';
 
 ConfigModule.setServiceName('autosend-service');
 
 @Module({
   imports: [
-    ConfigModule.register(config),
+    ConfigModule.register(() => config),
     TracingModule,
-    RequestsLoggerModule,
     LoggerModule,
+    CustomLoggerModule,
     MetricsModule,
     HealthModule,
     BullModule.forRoot({
@@ -27,6 +30,14 @@ ConfigModule.setServiceName('autosend-service');
       },
     }),
     DelayAutosendModule,
+    CustomerModule,
+    IdentityModule,
   ],
+  // providers: [
+  //   {
+  //     provide: 'APP_FILTER',
+  //     useClass: CustomHttpExceptionFilter,
+  //   },
+  // ],
 })
 export class AppModule {}

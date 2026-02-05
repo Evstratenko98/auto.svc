@@ -1,6 +1,8 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { ArrayNotEmpty, IsArray, IsEnum, IsNotEmpty, IsNumber, IsOptional, Min } from 'class-validator';
+import { ArrayNotEmpty, IsArray, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, Min } from 'class-validator';
 import { DELAY_AUTOSEND_SOURCE } from '../delay-autosend.constants';
+import { CsOffer } from '../../credit-selection/credit-selection.types';
+import { OFFER_EXAMPLE } from '../../credit-selection/credit-selection.constants';
 
 export class DelayAutosendRequestDto {
   @ApiProperty({ example: 123 })
@@ -8,10 +10,15 @@ export class DelayAutosendRequestDto {
   @IsNotEmpty()
   userId: number;
 
-  @ApiProperty({ type: [Object], example: [{ id: 1 }] })
+  @ApiProperty({ description: 'CalcId', example: '1' })
+  @IsString()
+  @IsNotEmpty()
+  calcId: string;
+
+  @ApiProperty({ type: [Object], example: [OFFER_EXAMPLE] })
   @IsArray()
   @ArrayNotEmpty()
-  offers: unknown[];
+  offers: CsOffer[];
 
   @ApiProperty({ enum: DELAY_AUTOSEND_SOURCE, example: DELAY_AUTOSEND_SOURCE.WEB })
   @IsEnum(DELAY_AUTOSEND_SOURCE)
